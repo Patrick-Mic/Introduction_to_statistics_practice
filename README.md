@@ -29,5 +29,5 @@ Prints `Everything is correct!` if all four checks pass; otherwise raises an
 
 ## What I learned
  - How to work according to the DRY-technique.
- - How to use assert and how it works and that it does not return anything.
+ - How to use assert and how it works and that it does not return anything but it raises an error when a check fails.
  - The differences between the possibilities when you do or don't consider replacement and order

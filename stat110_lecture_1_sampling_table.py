@@ -29,12 +29,6 @@ formula_product = len(OBJECTS) ** K
 formula_combination = math.comb(len(OBJECTS), K)
 formula_combination_with_repetition = math.comb(len(OBJECTS) + K - 1, K)
 
-# Itertools
-iter_comb = itertools.combinations(OBJECTS, K)
-iter_comb_with_repeat = itertools.combinations_with_replacement(OBJECTS, K)
-iter_product = itertools.product(OBJECTS, repeat=K)
-iter_perm = itertools.permutations(OBJECTS, K)
-
 # functions:
 def count_possibilities(tool):
     """ Function that calculates all the possibilities and counts the number of them
@@ -51,25 +45,25 @@ def assert_itertools_equals_formula(iter_tool, category_name, formula_possibilit
     """ Function that uses assert to check that the itertools give the same result as the formula written with math.
 
     in: the specific itertool function, the name for the type of sampling category (products e.g.), and the possibilities that was written with the math module.
-       e.g.: assert_itertools_equals_formula(iter_comb, "combinations", formula_combination)
-    returns: nothing if it works and an AssertionError if it goes wrong with a message written in an f-string
+       e.g.: assert_itertools_equals_formula(itertools.combinations(OBJECTS, K), "combinations", formula_combination)
+    returns: Does not return anything but raises an AssertionError if the count of the formula and the itertool don't match.
     """
 
     iter_result = count_possibilities(iter_tool)
-    assert iter_result == formula_possibility, f"{category_name}: telling {iter_result}, formule {formula_possibility}"
+    assert iter_result == formula_possibility, f"{category_name}: count {iter_result}, formula {formula_possibility}"
 
 
 
 # no order + no repeats, combinations can be any order.
-assert_itertools_equals_formula(iter_comb, "combinations", formula_combination + 1)
+assert_itertools_equals_formula(itertools.combinations(OBJECTS, K), "combinations", formula_combination) # 10
 
 # combinations can be any order, so no order + repeat (bc replacement)
-assert_itertools_equals_formula(iter_comb_with_repeat, "combinations with repetition", formula_combination_with_repetition) # 35
+assert_itertools_equals_formula(itertools.combinations_with_replacement(OBJECTS, K), "combinations with repetition", formula_combination_with_repetition) # 35
 
 # product is repeat + order
-assert_itertools_equals_formula(iter_product, "product", formula_product) # 125
+assert_itertools_equals_formula(itertools.product(OBJECTS, repeat=K), "product", formula_product) # 125
 
 #no repeat + order
-assert_itertools_equals_formula(iter_perm, "permutation", formula_permutations) # 60
+assert_itertools_equals_formula(itertools.permutations(OBJECTS, K), "permutation", formula_permutations) # 60
 
 print("Everything is correct!")
